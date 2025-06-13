@@ -381,6 +381,30 @@ DEFAULT_GRAFANA_PANELS = [
         ],
     ),
     Panel(
+        id=50,
+        title="Node TPU Tensorcore Utilization (Percentage)",
+        description="Percentage of tensorcore utilization for the TPUs on this node.",
+        unit="%",
+        targets=[
+            Target(
+                expr='sum(ray_tpu_tensorcore_utilization{{instance=~"$Instance",{global_filters}}}) by (instance, TpuIndex, TpuDeviceName)',
+                legend="Tensorcore Utilization: {{instance}}, tpu.{{TpuIndex}}, {{TpuDeviceName}}",
+            ),
+        ],
+    ),
+    Panel(
+        id=51,
+        title="Node TPU high bandwidth memory Utilization (Percentage)",
+        description="Percentage of HBM utilization for the TPUs on this node.",
+        unit="%",
+        targets=[
+            Target(
+                expr='sum(ray_tpu_memory_bandwidth_utilization{{instance=~"$Instance",{global_filters}}}) by (instance, TpuIndex, TpuDeviceName)',
+                legend="Memory Bandwidth Utilization: {{instance}}, tpu.{{TpuIndex}}, {{TpuDeviceName}}",
+            ),
+        ],
+    ),
+    Panel(
         id=20,
         title="Node Network",
         description="Network speed per node",
